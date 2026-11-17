@@ -10,16 +10,16 @@ public class Main {
         int depositCount = 0;
         int withdrawCount = 0;
         int attempts = 3;
-
-        System.out.print("Welcome!\nEnter your PIN: ");
-        int inPin = Integer.parseInt(in.nextLine());
+        System.out.println("Welcome!");
 
         do{
+            attempts--;
+            System.out.print("Enter your PIN: ");
+            int inPin = Integer.parseInt(in.nextLine());
             if (inPin == pin){
                 break;
             }
             else{
-                attempts--;
                 System.out.println("Try Again!\nRemaining Attempts: "+(attempts));
                 if(attempts==0) exit=false;
             }
@@ -27,18 +27,6 @@ public class Main {
         while (attempts!=0);
 
 
-
-
-//        for(int i=0; i<3; i++){
-//            if (inPin == pin){
-//                break;
-//            }
-//            else{
-//                System.out.println("Try Again!\nRemaining Attempts: "+(2-i));
-//            }
-//        }
-
-        if (inPin == pin){
             while(exit){
                 System.out.print(""" 
                 ========= ATM =========
@@ -60,7 +48,6 @@ public class Main {
                 }
             }
         }
-    }
 
     public static void CheckBalance(double balance){
         System.out.println("Balance: " + balance);
