@@ -1,14 +1,15 @@
 import java.util.Scanner;
 
 public class Main {
+
+    static Double  balance = 2500.75;
+    static int depositCount = 0;
+    static int withdrawCount = 0;
+    static Scanner in = new Scanner(System.in);
     public static void main(String[] args){
 
-        Scanner in = new Scanner(System.in);
         final int pin = 1234;
-        Double balance = 2500.75;
         boolean exit = true;
-        int depositCount = 0;
-        int withdrawCount = 0;
         int attempts = 3;
         System.out.println("Welcome!");
 
@@ -21,10 +22,14 @@ public class Main {
             }
             else{
                 System.out.println("Try Again!\nRemaining Attempts: "+(attempts));
-                if(attempts==0) exit=false;
+                if(attempts==0) {
+                    System.out.println("Your account has been locked!");
+                    exit=false;
+                }
             }
         }
         while (attempts!=0);
+
 
 
             while(exit){
@@ -39,22 +44,25 @@ public class Main {
                 """);
                 int choice = Integer.parseInt(in.nextLine());
                 switch (choice){
-                    case 1 -> CheckBalance(balance);
-                    case 2 -> Deposit(balance, depositCount);
-                    case 3 -> Withdraw(balance, withdrawCount);
-                    case 4 -> ShowAccountStatus(balance);
-                    case 5 -> Exit(depositCount, withdrawCount, exit);
-                    default-> Default();
+                    case 1 -> checkBalance(balance);
+                    case 2 -> checkDeposit(balance, depositCount);
+                    case 3 -> checkWithdraw(balance, withdrawCount);
+                    case 4 -> showAccountStatus(balance);
+                    case 5 -> {
+                        checkExit(depositCount, withdrawCount);
+                        exit = false;
+                        break;
+                    }
+                    default-> checkDefault();
                 }
             }
         }
 
-    public static void CheckBalance(double balance){
+    public static void checkBalance(double balance){
         System.out.println("Balance: " + balance);
     }
 
-    public static void Deposit(double balance, int depositCount){
-        Scanner in = new Scanner(System.in);
+    public static void checkDeposit(double balance, int depositCount){
         System.out.print("Enter Deposit amount: ");
         double inDeposit = Double.parseDouble(in.nextLine());
         if(inDeposit>0){
@@ -65,35 +73,36 @@ public class Main {
         System.out.println("Balance: " + balance);
     }
 
-    public static void Withdraw(double balance, int withdrawCount){
-        Scanner in = new Scanner(System.in);
+    public static void checkWithdraw(double balance, int withdrawCount){
         System.out.print("Enter Withdraw amount: ");
         double inWithdraw = Double.parseDouble(in.nextLine());
-        if(inWithdraw>0 && inWithdraw<balance){
+        if(inWithdraw>0 && inWithdraw<=balance){
             balance -= inWithdraw;
             withdrawCount++;
+            System.out.println("Balance: " + balance);
+            if(balance==0) System.out.println("Warning: Your account is empty!");
         }
         else if (inWithdraw==0){
             System.out.println("Transaction cancelled!");
         }
+        else if(inWithdraw>balance){
+            System.out.println("Insufficient Balance!");
+        }
         else System.out.println("Invalid amount!");
-        if(balance==0) System.out.println("Warning: Your account is empty!");
-        System.out.println("Balance: " + balance);
     }
 
-    public static void ShowAccountStatus(double balance){
+    public static void showAccountStatus(double balance){
         if(balance>=5000) System.out.println("VIP Customer");
-        else if(balance>=1000 && balance<5000) System.out.println("Regular Customer");
+        else if(balance>=1000) System.out.println("Regular Customer");
         else System.out.println("Low Balance");
     }
 
-    public static void Exit(int depositCount, int withdrawCount, boolean exit){
+    public static void checkExit(int depositCount, int withdrawCount){
         System.out.println("Thank you for using our ATM.");
-        System.out.println("Total successful deposit/withdrawal transactions: " + depositCount+withdrawCount +"\nDeposits: " + depositCount + "\nWithdraws: " + withdrawCount);
-        exit = false;
+        System.out.println("Total successful deposit/withdrawal transactions: " + (depositCount+withdrawCount) +"\nDeposits: " + depositCount + "\nWithdraws: " + withdrawCount);
     }
 
-    public static void Default(){
+    public static void checkDefault(){
         System.out.println("\'Invalid option!\'");
     }
 
