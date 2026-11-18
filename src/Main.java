@@ -42,12 +42,12 @@ public class Main {
             """);
             int choice = Integer.parseInt(in.nextLine());
             switch (choice){
-                case 1 -> checkBalance(balance);
-                case 2 -> checkDeposit(balance, depositCount);
-                case 3 -> checkWithdraw(balance, withdrawCount);
-                case 4 -> showAccountStatus(balance);
+                case 1 -> checkBalance();
+                case 2 -> checkDeposit();
+                case 3 -> checkWithdraw();
+                case 4 -> showAccountStatus();
                 case 5 -> {
-                    checkExit(depositCount, withdrawCount);
+                    checkExit();
                     break outer;
                 }
                 default-> checkDefault();
@@ -55,11 +55,11 @@ public class Main {
         }
     }
 
-    public static void checkBalance(double balance){
+    public static void checkBalance(){
         System.out.println("Balance: " + balance);
     }
 
-    public static void checkDeposit(double balance, int depositCount){
+    public static void checkDeposit(){
         System.out.print("Enter Deposit amount: ");
         double inDeposit = Double.parseDouble(in.nextLine());
         if(inDeposit>0){
@@ -70,7 +70,7 @@ public class Main {
         else System.out.println("Invalid amount!");
     }
 
-    public static void checkWithdraw(double balance, int withdrawCount){
+    public static void checkWithdraw(){
         System.out.print("Enter Withdraw amount: ");
         double inWithdraw = Double.parseDouble(in.nextLine());
         if(inWithdraw>0 && inWithdraw<=balance){
@@ -83,18 +83,18 @@ public class Main {
             System.out.println("Transaction cancelled!");
         }
         else if(inWithdraw>balance){
-            System.out.println("Insufficient Balance!");
+            System.out.println("Insufficient balance!");
         }
         else System.out.println("Invalid amount!");
     }
 
-    public static void showAccountStatus(double balance){
+    public static void showAccountStatus(){
         if(balance>=5000) System.out.println("VIP Customer");
         else if(balance>=1000) System.out.println("Regular Customer");
         else System.out.println("Low Balance");
     }
 
-    public static void checkExit(int depositCount, int withdrawCount){
+    public static void checkExit(){
         System.out.println("Thank you for using our ATM.");
         System.out.println("Total successful deposit/withdrawal transactions: " + (depositCount+withdrawCount) +"\nDeposits: " + depositCount + "\nWithdraws: " + withdrawCount);
     }
