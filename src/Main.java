@@ -29,7 +29,7 @@ public class Main {
         }
         while (attempts!=0);
 
-        outer:
+        menu:
         while(true){
             System.out.print(""" 
             ========= ATM =========
@@ -43,14 +43,14 @@ public class Main {
             int choice = Integer.parseInt(in.nextLine());
             switch (choice){
                 case 1 -> checkBalance();
-                case 2 -> checkDeposit();
-                case 3 -> checkWithdraw();
+                case 2 -> deposit();
+                case 3 -> withdraw();
                 case 4 -> showAccountStatus();
                 case 5 -> {
-                    checkExit();
-                    break outer;
+                    exit();
+                    break menu;
                 }
-                default-> checkDefault();
+                default-> defaultChoice();
             }
         }
     }
@@ -59,7 +59,7 @@ public class Main {
         System.out.println("Balance: " + balance);
     }
 
-    public static void checkDeposit(){
+    public static void deposit(){
         System.out.print("Enter Deposit amount: ");
         double inDeposit = Double.parseDouble(in.nextLine());
         if(inDeposit>0){
@@ -70,7 +70,7 @@ public class Main {
         else System.out.println("Invalid amount!");
     }
 
-    public static void checkWithdraw(){
+    public static void withdraw(){
         System.out.print("Enter Withdraw amount: ");
         double inWithdraw = Double.parseDouble(in.nextLine());
         if(inWithdraw>0 && inWithdraw<=balance){
@@ -94,13 +94,13 @@ public class Main {
         else System.out.println("Low Balance");
     }
 
-    public static void checkExit(){
+    public static void exit(){
         System.out.println("Thank you for using our ATM.");
         System.out.println("Total successful deposit/withdrawal transactions: " + (depositCount+withdrawCount) +"\nDeposits: " + depositCount + "\nWithdraws: " + withdrawCount);
     }
 
-    public static void checkDefault(){
-        System.out.println("\'Invalid option!\'");
+    public static void defaultChoice(){
+        System.out.println("Invalid option!");
     }
 
 }
