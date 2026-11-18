@@ -2,14 +2,13 @@ import java.util.Scanner;
 
 public class Main {
 
-    static Double  balance = 2500.75;
+    static double  balance = 2500.75;
     static int depositCount = 0;
     static int withdrawCount = 0;
     static Scanner in = new Scanner(System.in);
     public static void main(String[] args){
 
         final int pin = 1234;
-        boolean exit = true;
         int attempts = 3;
         System.out.println("Welcome!");
 
@@ -18,45 +17,43 @@ public class Main {
             System.out.print("Enter your PIN: ");
             int inPin = Integer.parseInt(in.nextLine());
             if (inPin == pin){
-                break;
+                attempts=0;
             }
             else{
                 System.out.println("Try Again!\nRemaining Attempts: "+(attempts));
                 if(attempts==0) {
                     System.out.println("Your account has been locked!");
-                    exit=false;
+                    return;
                 }
             }
         }
         while (attempts!=0);
 
-
-
-            while(exit){
-                System.out.print(""" 
-                ========= ATM =========
-                1. Check Balance
-                2. Deposit
-                3. Withdraw
-                4. Show Account Status
-                5. Exit
-                =======================
-                """);
-                int choice = Integer.parseInt(in.nextLine());
-                switch (choice){
-                    case 1 -> checkBalance(balance);
-                    case 2 -> checkDeposit(balance, depositCount);
-                    case 3 -> checkWithdraw(balance, withdrawCount);
-                    case 4 -> showAccountStatus(balance);
-                    case 5 -> {
-                        checkExit(depositCount, withdrawCount);
-                        exit = false;
-                        break;
-                    }
-                    default-> checkDefault();
+        outer:
+        while(true){
+            System.out.print(""" 
+            ========= ATM =========
+            1. Check Balance
+            2. Deposit
+            3. Withdraw
+            4. Show Account Status
+            5. Exit
+            =======================
+            """);
+            int choice = Integer.parseInt(in.nextLine());
+            switch (choice){
+                case 1 -> checkBalance(balance);
+                case 2 -> checkDeposit(balance, depositCount);
+                case 3 -> checkWithdraw(balance, withdrawCount);
+                case 4 -> showAccountStatus(balance);
+                case 5 -> {
+                    checkExit(depositCount, withdrawCount);
+                    break outer;
                 }
+                default-> checkDefault();
             }
         }
+    }
 
     public static void checkBalance(double balance){
         System.out.println("Balance: " + balance);
@@ -68,9 +65,9 @@ public class Main {
         if(inDeposit>0){
             balance += inDeposit;
             depositCount++;
+            System.out.println("Balance: " + balance);
         }
         else System.out.println("Invalid amount!");
-        System.out.println("Balance: " + balance);
     }
 
     public static void checkWithdraw(double balance, int withdrawCount){
