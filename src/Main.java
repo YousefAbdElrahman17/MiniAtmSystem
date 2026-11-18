@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args){
 
         final int pin = 1234;
+        boolean loggedIn = false;
         int attempts = 3;
         System.out.println("Welcome!");
 
@@ -17,20 +18,20 @@ public class Main {
             System.out.print("Enter your PIN: ");
             int inPin = Integer.parseInt(in.nextLine());
             if (inPin == pin){
-                attempts=0;
+                loggedIn = true;
             }
             else{
                 System.out.println("Try Again!\nRemaining Attempts: "+(attempts));
                 if(attempts==0) {
-                    System.out.println("Your account has been locked!");
+                    System.out.println("Your account has been locked.");
                     return;
                 }
             }
         }
-        while (attempts!=0);
+        while (!loggedIn);
 
         menu:
-        while(true){
+        while(loggedIn){
             System.out.print(""" 
             ========= ATM =========
             1. Check Balance
@@ -67,7 +68,7 @@ public class Main {
             depositCount++;
             System.out.println("Balance: " + balance);
         }
-        else System.out.println("Invalid amount!");
+        else System.out.println("Invalid amount.");
     }
 
     public static void withdraw(){
@@ -77,15 +78,15 @@ public class Main {
             balance -= inWithdraw;
             withdrawCount++;
             System.out.println("Balance: " + balance);
-            if(balance==0) System.out.println("Warning: Your account is empty!");
+            if(balance==0) System.out.println("Warning: Your account is empty.");
         }
         else if (inWithdraw==0){
-            System.out.println("Transaction cancelled!");
+            System.out.println("Transaction cancelled.");
         }
         else if(inWithdraw>balance){
-            System.out.println("Insufficient balance!");
+            System.out.println("Insufficient balance.");
         }
-        else System.out.println("Invalid amount!");
+        else System.out.println("Invalid amount.");
     }
 
     public static void showAccountStatus(){
@@ -100,7 +101,7 @@ public class Main {
     }
 
     public static void defaultChoice(){
-        System.out.println("Invalid option!");
+        System.out.println("Invalid option.");
     }
 
 }
